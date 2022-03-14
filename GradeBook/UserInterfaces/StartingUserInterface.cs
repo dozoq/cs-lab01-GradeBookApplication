@@ -43,7 +43,8 @@ namespace GradeBook.UserInterfaces
             BaseGradeBook gradeBook;
             bool isWeighted;
             if (!bool.TryParse(parts[3], out isWeighted))
-            { 
+            {
+                throw new InvalidOperationException();
             }
             switch (parts[2])
             {

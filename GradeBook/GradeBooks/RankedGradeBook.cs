@@ -37,10 +37,10 @@ namespace GradeBook.GradeBooks
 
         public override char GetLetterGrade(double averageGrade)
         {
-            char grade = 'F';
             if (Students.Count < 5)
                 throw new InvalidOperationException();
             double highestScore = (from student in Students select student.AverageGrade).Max();
+            char grade = 'F';
             if(averageGrade > highestScore/5*4)
             {
                 grade = 'A';
