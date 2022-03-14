@@ -41,22 +41,33 @@ namespace GradeBook.UserInterfaces
             }
             var name = parts[1];
             BaseGradeBook gradeBook;
+            bool isWeighted;
+            switch (parts[3])
+            {
+                case "true":
+                    isWeighted = true;
+                    break;
+                case "false":
+                    isWeighted = false;
+                    break;
+                default:
+                    Console.WriteLine("Command not valid, Create requires a name, type of gradebook, if it's weighted (true / false).");
+                    return;
+            }
             switch (parts[2])
             {
                 case "standard":
-                    gradeBook = new StandardGradeBook(name);
-                    Console.WriteLine($"Created gradebook {name}.");    //To nie powinno być tworzone tym sposobem, ale jako że mam zwrócić wynik w konsoli a nie wyrzucić error upraszczam trochę
-                    GradeBookUserInterface.CommandLoop(gradeBook);
+                    gradeBook = new StandardGradeBook(name, isWeighted);
                     break;
                 case "ranked":
-                    gradeBook = new RankedGradeBook(name);
-                    Console.WriteLine($"Created gradebook {name}.");
-                    GradeBookUserInterface.CommandLoop(gradeBook);
+                    gradeBook = new RankedGradeBook(name, isWeighted);
                     break;
                 default:
                     Console.WriteLine($"{parts[2]} is not a supported type of gradebook, please try again");
-                    break;
+                    return;
             }
+            Console.WriteLine($"Created gradebook {name}.");
+            GradeBookUserInterface.CommandLoop(gradeBook);
         }
 
         public static void LoadCommand(string command)
