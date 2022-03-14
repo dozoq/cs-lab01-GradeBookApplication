@@ -40,9 +40,23 @@ namespace GradeBook.UserInterfaces
                 return;
             }
             var name = parts[1];
-            BaseGradeBook gradeBook = new BaseGradeBook(name);
-            Console.WriteLine("Created gradebook {0}.", name);
-            GradeBookUserInterface.CommandLoop(gradeBook);
+            BaseGradeBook gradeBook;
+            switch (parts[2])
+            {
+                case "standard":
+                    gradeBook = new StandardGradeBook(name);
+                    Console.WriteLine($"Created gradebook {name}.");    //To nie powinno być tworzone tym sposobem, ale jako że mam zwrócić wynik w konsoli a nie wyrzucić error upraszczam trochę
+                    GradeBookUserInterface.CommandLoop(gradeBook);
+                    break;
+                case "ranked":
+                    gradeBook = new RankedGradeBook(name);
+                    Console.WriteLine($"Created gradebook {name}.");
+                    GradeBookUserInterface.CommandLoop(gradeBook);
+                    break;
+                default:
+                    Console.WriteLine($"{parts[2]} is not a supported type of gradebook, please try again");
+                    break;
+            }
         }
 
         public static void LoadCommand(string command)
